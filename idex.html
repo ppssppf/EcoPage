@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VerdeRaíz — Pequeños cambios, un planeta mejor.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #2E5E4E;
+    --verde-suave: #6B8F71;
+    --beige: #F4EFE6;
+    --hueso: #FAF9F6;
+    --tierra: #7A5C3E;
+    --text: #1C2B26;
+    --text-muted: #6B7B73;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--hueso);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(250,249,246,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(46,94,78,0.08);
+    transition: padding .3s;
+  }
+  nav.scrolled { padding: .8rem 4rem; }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 600;
+    color: var(--verde); text-decoration: none; letter-spacing: .02em;
+  }
+  .nav-logo span { color: var(--tierra); }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-muted);
+    font-size: .88rem; letter-spacing: .04em; text-transform: uppercase;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--verde); }
+  .nav-cta {
+    background: var(--verde); color: #fff !important;
+    padding: .5rem 1.3rem; border-radius: 2rem;
+    font-size: .85rem !important; letter-spacing: .05em !important;
+  }
+  .nav-cta:hover { background: var(--verde-suave) !important; color:#fff !important; }
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
+  .hamburger span { width:24px; height:2px; background:var(--verde); border-radius:2px; transition:.3s; }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 4rem;
+    padding-top: 80px;
+    background: var(--beige);
+    position: relative; overflow: hidden;
+  }
+  .hero-blob {
+    position: absolute; border-radius: 50%; filter: blur(80px); opacity:.25; pointer-events:none;
+  }
+  .blob1 { width:520px;height:520px; background:var(--verde-suave); top:-100px; right:5%; animation: blobFloat 8s ease-in-out infinite; }
+  .blob2 { width:300px;height:300px; background:var(--tierra); bottom:0; left:10%; animation: blobFloat 10s ease-in-out infinite reverse; }
+  @keyframes blobFloat { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-30px) scale(1.05)} }
+
+  .hero-text { position:relative; z-index:2; }
+  .hero-badge {
+    display: inline-flex; align-items:center; gap:.5rem;
+    background: rgba(46,94,78,.1); color:var(--verde);
+    padding: .4rem 1rem; border-radius: 2rem;
+    font-size:.78rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase;
+    margin-bottom: 1.8rem;
+    animation: fadeUp .8s ease both;
+  }
+  .hero-badge::before { content:'🌿'; font-size:1rem; }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 300; line-height: 1.1;
+    color: var(--verde);
+    animation: fadeUp .9s .1s ease both;
+  }
+  .hero-title em { font-style: italic; color: var(--tierra); }
+  .hero-sub {
+    font-size: 1.05rem; color: var(--text-muted);
+    max-width: 420px; line-height: 1.7;
+    margin: 1.5rem 0 2.5rem;
+    animation: fadeUp 1s .2s ease both;
+    font-weight: 300;
+  }
+  .hero-btns { display:flex; gap:1rem; flex-wrap:wrap; animation: fadeUp 1s .3s ease both; margin-bottom: 4rem; }
+  .btn-primary {
+    background: var(--verde); color: #fff;
+    padding: .85rem 2rem; border-radius: 3rem;
+    text-decoration:none; font-size:.9rem; font-weight:500;
+    letter-spacing:.03em; transition: transform .2s, background .2s;
+    display:inline-flex; align-items:center; gap:.5rem;
+  }
+  .btn-primary:hover { background: var(--verde-suave); transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent; color: var(--verde);
+    padding: .85rem 2rem; border-radius: 3rem;
+    text-decoration:none; font-size:.9rem; font-weight:500;
+    border: 1.5px solid var(--verde);
+    transition: background .2s, transform .2s;
+  }
+  .btn-ghost:hover { background: rgba(46,94,78,.06); transform:translateY(-2px); }
+
+  .hero-visual {
+    position:relative; z-index:2;
+    display:flex; justify-content:center; align-items:center;
+    animation: fadeUp 1s .15s ease both;
+  }
+  .hero-img-frame {
+    width: 420px; height: 520px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    overflow: hidden; position: relative;
+    background: linear-gradient(135deg, var(--verde) 0%, var(--verde-suave) 60%, #a8c5a0 100%);
+    box-shadow: 0 40px 80px rgba(46,94,78,.2);
+  }
+  /* SVG Nature illustration inside frame */
+  .nature-svg { width:100%; height:100%; }
+  .floating-tag {
+    position:absolute; background:#fff; border-radius:1rem;
+    padding:.6rem 1rem; font-size:.78rem; font-weight:500;
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    display:flex; align-items:center; gap:.4rem;
+    animation: tagFloat 4s ease-in-out infinite;
+    white-space: nowrap;
+  }
+  .tag1 { top:12%;  left:-24px;  color:var(--verde);      animation-delay:0s;   animation-duration:4.2s; }
+  .tag2 { bottom:18%; right:-24px; color:var(--tierra);   animation-delay:1.5s; animation-duration:5s;   }
+  .tag3 { top:42%;  left:-28px;  color:#3a7ec4;           animation-delay:0.8s; animation-duration:4.8s; }
+  .tag4 { top:28%;  right:-28px; color:var(--verde);      animation-delay:2.2s; animation-duration:3.9s; }
+  .tag5 { bottom:38%; left:-20px; color:var(--tierra);    animation-delay:1.1s; animation-duration:5.3s; }
+  @keyframes tagFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ─── STATS ─── */
+  .stats {
+    background: var(--verde); color: #fff;
+    padding: 3rem 4rem;
+    display: grid; grid-template-columns: repeat(4,1fr);
+    gap: 1rem; text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem; font-weight: 600;
+  }
+  .stat-label { font-size:.82rem; opacity:.7; letter-spacing:.04em; margin-top:.2rem; }
+
+  /* ─── SECTION BASE ─── */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    display:inline-block;
+    font-size:.75rem; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--verde-suave); font-weight:500; margin-bottom:1rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem,4vw,3.2rem); font-weight:300;
+    line-height:1.2; color:var(--verde);
+  }
+  .section-title em { font-style:italic; color:var(--tierra); }
+
+  /* ─── PRODUCTOS ─── */
+  #productos { background: var(--hueso); }
+  .products-header { text-align:center; margin-bottom:3.5rem; }
+  .products-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(270px,1fr));
+    gap: 1.8rem; max-width:1200px; margin:0 auto;
+  }
+  .product-card {
+    background: #fff;
+    border-radius: 1.2rem;
+    overflow:hidden;
+    transition: transform .3s, box-shadow .3s;
+    cursor:pointer;
+  }
+  .product-card:hover { transform: translateY(-8px); box-shadow: 0 24px 48px rgba(46,94,78,.12); }
+  .product-img {
+    height: 220px;
+    display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden; background:#e8f0e8;
+  }
+  .product-img img {
+    width:100%; height:100%; object-fit:cover;
+    transition: transform .45s ease;
+    display:block;
+  }
+  .product-card:hover .product-img img { transform: scale(1.08); }
+  .product-badge {
+    position:absolute; top:12px; left:12px;
+    background:var(--verde); color:#fff;
+    font-size:.65rem; padding:.25rem .7rem; border-radius:2rem;
+    letter-spacing:.04em; text-transform:uppercase; font-weight:500;
+  }
+  .product-body { padding: 1.4rem; }
+  .product-name { font-weight:500; font-size:1rem; margin-bottom:.4rem; }
+  .product-desc { font-size:.82rem; color:var(--text-muted); line-height:1.5; margin-bottom:1rem; }
+  .product-footer { display:flex; align-items:center; justify-content:space-between; }
+  .product-price { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:600; color:var(--verde); }
+  .btn-add {
+    background:var(--verde); color:#fff; border:none; cursor:pointer;
+    width:36px; height:36px; border-radius:50%;
+    font-size:1.2rem; display:flex; align-items:center; justify-content:center;
+    transition:background .2s, transform .15s;
+  }
+  .btn-add:hover { background:var(--verde-suave); transform:scale(1.1); }
+
+  /* ─── NOSOTROS ─── */
+  #nosotros {
+    background: var(--beige);
+    display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center;
+  }
+  .nosotros-visual { position:relative; }
+  .nosotros-frame {
+    width:100%; aspect-ratio:4/5;
+    border-radius: 2rem 2rem 6rem 2rem;
+    background: linear-gradient(155deg, var(--verde) 0%, #3d7a62 50%, var(--verde-suave) 100%);
+    display:flex; align-items:center; justify-content:center;
+    font-size:6rem; overflow:hidden; position:relative;
+  }
+  .nosotros-deco {
+    position:absolute; background:#fff; border-radius:1.2rem;
+    padding:1rem 1.4rem; bottom:-1.5rem; right:-1.5rem;
+    text-align:center; box-shadow:0 12px 32px rgba(0,0,0,.1);
+  }
+  .nosotros-deco-num { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:600; color:var(--verde); }
+  .nosotros-deco-text { font-size:.72rem; color:var(--text-muted); }
+  .nosotros-text .section-title { margin-bottom:1.5rem; }
+  .nosotros-text p { color:var(--text-muted); line-height:1.8; font-weight:300; margin-bottom:1.2rem; }
+  .nosotros-values { display:flex; flex-direction:column; gap:.8rem; margin-top:2rem; }
+  .nosotros-value {
+    display:flex; align-items:center; gap:1rem;
+    font-size:.9rem; color:var(--verde-suave);
+  }
+  .nosotros-value::before { content:''; width:24px; height:2px; background:var(--verde-suave); border-radius:2px; flex-shrink:0; }
+
+  /* ─── DIFERENCIADORES ─── */
+  #diferenciadores { background: var(--verde); }
+  .dif-header { text-align:center; margin-bottom:3.5rem; }
+  .dif-header .section-label { color:rgba(255,255,255,.5); }
+  .dif-header .section-title { color:#fff; }
+  .dif-grid {
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem;
+    max-width:1100px; margin:0 auto;
+  }
+  .dif-card {
+    background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1);
+    border-radius:1.2rem; padding:2rem;
+    text-align:center; color:#fff;
+    transition: background .3s, transform .3s;
+    cursor:default;
+  }
+  .dif-card:hover { background:rgba(255,255,255,.13); transform:translateY(-6px); }
+  .dif-icon { font-size:2.5rem; margin-bottom:1rem; display:block; }
+  .dif-title { font-weight:500; font-size:1rem; margin-bottom:.5rem; }
+  .dif-desc { font-size:.82rem; opacity:.65; line-height:1.6; }
+
+  /* ─── GALERÍA ─── */
+  #galeria { background:var(--beige); padding-bottom:4rem; }
+  .galeria-header { text-align:center; margin-bottom:2.5rem; }
+  .galeria-grid {
+    display:grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap:1rem; max-width:1200px; margin:0 auto;
+  }
+  .galeria-item {
+    border-radius:1.2rem; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    font-size:3.5rem; position:relative;
+    min-height:180px; cursor:pointer;
+    transition:transform .3s;
+    background: #c8d8c8;
+  }
+  .galeria-item:hover { transform:scale(1.02); }
+  .galeria-item:nth-child(1) { grid-row:span 2; min-height:360px; font-size:5rem; }
+  .g1 { background:#3d7a62; }
+  .g2 { background:#c4a882; }
+  .g3 { background:#8fb08a; }
+  .g4 { background:#d4c4a8; }
+  .g5 { background:#4a8a6e; }
+  /* Real photo inside each gallery card */
+  .galeria-item img {
+    position:absolute; inset:0;
+    width:100%; height:100%; object-fit:cover;
+    transition: transform .55s ease;
+    display:block;
+  }
+  .galeria-item:hover img { transform:scale(1.07); }
+  /* Elegant dark gradient so the label stays legible */
+  .galeria-item::after {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(to top, rgba(0,0,0,.5) 0%, rgba(0,0,0,.06) 55%, transparent 100%);
+    pointer-events:none; z-index:1;
+  }
+  .galeria-label {
+    position:absolute; bottom:14px; left:14px;
+    background:rgba(255,255,255,.92); border-radius:.6rem;
+    padding:.3rem .8rem; font-size:.72rem; font-weight:500; color:var(--verde);
+    z-index:2;
+  }
+
+  /* ─── TESTIMONIOS ─── */
+  #testimonios { background:var(--hueso); overflow:hidden; }
+  .test-header { text-align:center; margin-bottom:3rem; }
+
+  /* Bubble arena */
+  .test-bubbles {
+    position: relative;
+    min-height: 680px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .test-card {
+    background:#fff; border-radius:1.4rem; padding:1.8rem;
+    width:290px;
+    border:1px solid rgba(46,94,78,.07);
+    box-shadow: 0 8px 32px rgba(46,94,78,.08);
+    position: absolute;
+    transition: box-shadow .3s, transform .15s;
+  }
+  .test-card:hover {
+    box-shadow: 0 20px 48px rgba(46,94,78,.16);
+    z-index: 10;
+  }
+
+  /* Individual bubble positions — desktop */
+  .test-card:nth-child(1) { top:0%;    left:0%;    animation: bubble1 7s ease-in-out infinite; }
+  .test-card:nth-child(2) { top:2%;    left:32%;   animation: bubble2 9s ease-in-out infinite; }
+  .test-card:nth-child(3) { top:0%;    left:65%;   animation: bubble3 8s ease-in-out infinite; }
+  .test-card:nth-child(4) { top:52%;   left:5%;    animation: bubble4 10s ease-in-out infinite; }
+  .test-card:nth-child(5) { top:50%;   left:36%;   animation: bubble5 7.5s ease-in-out infinite; }
+  .test-card:nth-child(6) { top:50%;   left:67%;   animation: bubble6 9.5s ease-in-out infinite; }
+
+  @keyframes bubble1 { 0%,100%{transform:translateY(0px)   rotate(-1deg)} 50%{transform:translateY(-18px)  rotate(1deg)} }
+  @keyframes bubble2 { 0%,100%{transform:translateY(0px)   rotate(1deg)}  50%{transform:translateY(-24px)  rotate(-1.5deg)} }
+  @keyframes bubble3 { 0%,100%{transform:translateY(0px)   rotate(.5deg)} 50%{transform:translateY(-14px)  rotate(-1deg)} }
+  @keyframes bubble4 { 0%,100%{transform:translateY(0px)   rotate(-1deg)} 50%{transform:translateY(-20px)  rotate(1.5deg)} }
+  @keyframes bubble5 { 0%,100%{transform:translateY(0px)   rotate(1.5deg)}50%{transform:translateY(-16px)  rotate(-1deg)} }
+  @keyframes bubble6 { 0%,100%{transform:translateY(0px)   rotate(-0.5deg)}50%{transform:translateY(-22px) rotate(1deg)} }
+
+  .test-stars { color:#f4a93c; font-size:1rem; margin-bottom:1rem; letter-spacing:.1em; }
+  .test-text { font-size:.86rem; color:var(--text-muted); line-height:1.7; font-style:italic; margin-bottom:1.4rem; }
+  .test-author { display:flex; align-items:center; gap:.8rem; }
+  .test-avatar {
+    width:38px; height:38px; border-radius:50%; font-size:1.2rem;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .test-name { font-weight:500; font-size:.88rem; }
+  .test-loc { font-size:.75rem; color:var(--text-muted); }
+
+  /* Responsive bubbles — tablet */
+  @media(max-width:900px){
+    .test-bubbles {
+      min-height: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    .test-card {
+      position: static;
+      width: 100%;
+      animation: bubbleMobile 6s ease-in-out infinite;
+    }
+    .test-card:nth-child(2) { animation-delay:.8s; }
+    .test-card:nth-child(3) { animation-delay:1.6s; }
+    .test-card:nth-child(4) { animation-delay:2.4s; }
+    .test-card:nth-child(5) { animation-delay:3.2s; }
+    .test-card:nth-child(6) { animation-delay:4s; }
+    @keyframes bubbleMobile { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  }
+
+  /* Responsive bubbles — mobile */
+  @media(max-width:580px){
+    .test-bubbles { grid-template-columns: 1fr; }
+  }
+
+  /* ─── NEWSLETTER ─── */
+  #newsletter {
+    background: linear-gradient(135deg, var(--verde) 0%, #1a3d30 100%);
+    text-align:center; padding:5rem 4rem; position:relative; overflow:hidden;
+  }
+  #newsletter::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(circle at 70% 50%, rgba(107,143,113,.3) 0%, transparent 60%);
+  }
+  .nl-content { position:relative; z-index:1; max-width:580px; margin:0 auto; }
+  .nl-icon { font-size:3rem; margin-bottom:1rem; }
+  .nl-title { font-family:'Cormorant Garamond',serif; font-size:2.6rem; font-weight:300; color:#fff; margin-bottom:.8rem; }
+  .nl-sub { color:rgba(255,255,255,.65); font-size:.92rem; line-height:1.6; margin-bottom:2.5rem; }
+  .nl-form { display:flex; gap:.8rem; max-width:440px; margin:0 auto; }
+  .nl-input {
+    flex:1; padding:.9rem 1.4rem; border-radius:3rem; border:1.5px solid rgba(255,255,255,.25);
+    background:rgba(255,255,255,.1); color:#fff; font-family:'DM Sans',sans-serif;
+    font-size:.9rem; outline:none; transition:border-color .2s;
+    backdrop-filter:blur(8px);
+  }
+  .nl-input::placeholder { color:rgba(255,255,255,.45); }
+  .nl-input:focus { border-color:rgba(255,255,255,.6); }
+  .nl-btn {
+    background:#fff; color:var(--verde); padding:.9rem 1.8rem;
+    border-radius:3rem; border:none; font-family:'DM Sans',sans-serif;
+    font-size:.9rem; font-weight:500; cursor:pointer;
+    transition:transform .2s, background .2s; white-space:nowrap;
+  }
+  .nl-btn:hover { background:var(--beige); transform:scale(1.03); }
+
+  /* ─── CONTACTO ─── */
+  #contacto { background:var(--beige); display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+  .contact-info .section-title { margin-bottom:1.5rem; }
+  .contact-info p { color:var(--text-muted); line-height:1.7; font-weight:300; margin-bottom:2rem; }
+  .contact-items { display:flex; flex-direction:column; gap:1.2rem; }
+  .contact-item { display:flex; align-items:center; gap:1rem; font-size:.9rem; }
+  .contact-icon { font-size:1.3rem; width:42px; height:42px; background:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .contact-form { display:flex; flex-direction:column; gap:1.2rem; }
+  .form-group { display:flex; flex-direction:column; gap:.4rem; }
+  .form-group label { font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:var(--verde-suave); font-weight:500; }
+  .form-group input, .form-group textarea, .form-group select {
+    padding:.85rem 1.2rem; border:1.5px solid rgba(46,94,78,.15);
+    border-radius:.7rem; background:#fff; font-family:'DM Sans',sans-serif;
+    font-size:.9rem; color:var(--text); outline:none; transition:border-color .2s;
+    appearance:none;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color:var(--verde); }
+  .form-group textarea { resize:vertical; min-height:120px; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .submit-btn {
+    background:var(--verde); color:#fff; border:none; cursor:pointer;
+    padding:.9rem 2rem; border-radius:3rem;
+    font-family:'DM Sans',sans-serif; font-size:.9rem; font-weight:500;
+    letter-spacing:.03em; transition:background .2s, transform .2s;
+    display:flex; align-items:center; gap:.5rem; width:fit-content;
+  }
+  .submit-btn:hover { background:var(--verde-suave); transform:translateY(-2px); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background:#0e1f19; color:rgba(255,255,255,.7);
+    padding:4rem 4rem 2rem;
+  }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; margin-bottom:3rem; }
+  .footer-brand .nav-logo { color:#fff; display:block; margin-bottom:1rem; }
+  .footer-brand p { font-size:.85rem; line-height:1.7; max-width:240px; }
+  .footer-col h4 { color:#fff; font-size:.85rem; letter-spacing:.06em; text-transform:uppercase; margin-bottom:1.2rem; }
+  .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:.7rem; }
+  .footer-col a { color:rgba(255,255,255,.55); text-decoration:none; font-size:.85rem; transition:color .2s; }
+  .footer-col a:hover { color:#fff; }
+  .footer-bottom { border-top:1px solid rgba(255,255,255,.08); padding-top:1.5rem; display:flex; justify-content:space-between; align-items:center; font-size:.78rem; }
+  .socials { display:flex; gap:.8rem; }
+  .social-btn { width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-size:1rem; cursor:pointer; transition:background .2s, color .2s; color:rgba(255,255,255,.6); text-decoration:none; }
+  .social-btn:hover { background:rgba(255,255,255,.18); color:#fff; }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .reveal { opacity:0; transform:translateY(30px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal-delay-1 { transition-delay:.1s; }
+  .reveal-delay-2 { transition-delay:.2s; }
+  .reveal-delay-3 { transition-delay:.3s; }
+  .reveal-delay-4 { transition-delay:.4s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media(max-width:900px){
+    nav { padding:1rem 1.5rem; }
+    .nav-links { display:none; }
+    .hamburger { display:flex; }
+    .nav-mobile-open .nav-links {
+      display:flex; flex-direction:column;
+      position:fixed; top:60px; left:0; right:0; bottom:0;
+      background:var(--hueso); align-items:center; justify-content:center;
+      font-size:1.2rem; gap:2rem; z-index:99;
+    }
+    #hero { grid-template-columns:1fr; text-align:center; padding:6rem 1.5rem 3rem; }
+    .hero-btns { justify-content:center; }
+    .hero-visual { order:-1; }
+    .hero-img-frame { width:260px; height:320px; }
+    .tag1,.tag2,.tag3,.tag4,.tag5 { display:none; }
+    .stats { grid-template-columns:repeat(2,1fr); padding:2.5rem 2rem; }
+    section { padding:4rem 1.5rem; }
+    #nosotros { grid-template-columns:1fr; gap:2.5rem; }
+    .dif-grid { grid-template-columns:repeat(2,1fr); }
+    .galeria-grid { grid-template-columns:1fr 1fr; }
+    .galeria-item:nth-child(1) { grid-column:span 2; grid-row:span 1; min-height:180px; }
+    #contacto { grid-template-columns:1fr; gap:2.5rem; }
+    .footer-grid { grid-template-columns:1fr 1fr; gap:2rem; }
+    .nl-form { flex-direction:column; }
+    .form-row { grid-template-columns:1fr; }
+  }
+  @media(max-width:580px){
+    .dif-grid { grid-template-columns:1fr; }
+    .galeria-grid { grid-template-columns:1fr; }
+    .galeria-item:nth-child(1) { grid-column:auto; }
+    .footer-grid { grid-template-columns:1fr; }
+    .footer-bottom { flex-direction:column; gap:1rem; text-align:center; }
+  }
+
+  /* ─── CURSOR NORMAL + HOJAS ─── */
+  body { cursor: default; }
+  a, button, .product-card, .dif-card, .galeria-item { cursor: pointer; }
+
+  .leaf-particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    font-size: 1rem;
+    user-select: none;
+    animation: leafFall var(--dur) ease-in forwards;
+    transform-origin: center;
+  }
+  @keyframes leafFall {
+    0%   { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+    40%  { opacity: .9; }
+    100% { opacity: 0; transform: translate(var(--dx), 90px) rotate(var(--rot)) scale(.5); }
+  }
+
+  /* Smooth count animation */
+  @keyframes countUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+  .stat-num { animation: countUp .6s ease both; }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Verde<span>Raíz</span></a>
+  <ul class="nav-links">
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#diferenciadores">¿Por qué?</a></li>
+    <li><a href="#testimonios">Testimonios</a></li>
+    <li><a href="#contacto" class="nav-cta">Contactar</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-blob blob1"></div>
+  <div class="hero-blob blob2"></div>
+  <div class="hero-text">
+    <div class="hero-badge">Tienda ecológica certificada</div>
+    <h1 class="hero-title">
+      Pequeños<br>cambios,<br><em>un planeta</em><br>mejor.
+    </h1>
+    <p class="hero-sub">
+      Productos naturales, reutilizables y biodegradables para un estilo de vida consciente y sostenible.
+    </p>
+    <div class="hero-btns">
+      <a href="#productos" class="btn-primary">🌿 Explorar productos</a>
+      <a href="#nosotros" class="btn-ghost">Nuestra historia</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-img-frame">
+      <svg class="nature-svg" viewBox="0 0 420 520" xmlns="http://www.w3.org/2000/svg">
+        <!-- Sky/bg gradient -->
+        <defs>
+          <radialGradient id="glow" cx="50%" cy="40%" r="50%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.15)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+          </radialGradient>
+          <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#4caf82"/>
+            <stop offset="100%" stop-color="#2E5E4E"/>
+          </linearGradient>
+          <linearGradient id="stemGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5a9970"/>
+            <stop offset="100%" stop-color="#3d7060"/>
+          </linearGradient>
+        </defs>
+        <rect width="420" height="520" fill="url(#glow)"/>
+        <!-- Ground -->
+        <ellipse cx="210" cy="460" rx="200" ry="60" fill="rgba(0,0,0,0.15)"/>
+        <!-- Main plant stem -->
+        <path d="M210 440 Q205 380 210 320 Q215 260 205 200" stroke="url(#stemGrad)" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <!-- Left large leaf -->
+        <path d="M205 200 Q160 160 140 120 Q170 130 190 170 Q200 185 205 200Z" fill="url(#leafGrad)" opacity="0.95"/>
+        <!-- Right large leaf -->
+        <path d="M205 240 Q255 200 285 170 Q265 190 250 215 Q235 235 205 240Z" fill="url(#leafGrad)" opacity="0.9"/>
+        <!-- Mid left leaf -->
+        <path d="M207 300 Q165 270 148 240 Q175 255 195 280 Q203 290 207 300Z" fill="#5ab585" opacity="0.85"/>
+        <!-- Mid right leaf -->
+        <path d="M208 350 Q255 330 275 305 Q258 320 238 340 Q225 348 208 350Z" fill="#5ab585" opacity="0.80"/>
+        <!-- Small top leaves -->
+        <path d="M204 190 Q200 165 195 145 Q205 158 208 175 Q208 183 204 190Z" fill="#a8e4b0" opacity="0.9"/>
+        <!-- Decorative circles/berries -->
+        <circle cx="148" cy="125" r="8" fill="#f4a93c" opacity="0.9"/>
+        <circle cx="285" cy="172" r="6" fill="#f4a93c" opacity="0.85"/>
+        <circle cx="155" cy="248" r="5" fill="#e07b5a" opacity="0.8"/>
+        <!-- Floating leaves -->
+        <g style="animation:leafDrift 6s ease-in-out infinite">
+          <path d="M340 180 Q360 160 370 145 Q360 155 348 168 Q344 174 340 180Z" fill="#7ec89e" opacity="0.7"/>
+        </g>
+        <g style="animation:leafDrift 8s ease-in-out infinite reverse">
+          <path d="M70 300 Q50 280 45 265 Q58 275 65 290 Q68 296 70 300Z" fill="#7ec89e" opacity="0.6"/>
+        </g>
+        <!-- Product bottle illustration -->
+        <rect x="178" y="390" width="64" height="80" rx="8" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+        <rect x="186" y="383" width="48" height="14" rx="4" fill="rgba(255,255,255,0.25)"/>
+        <text x="210" y="430" text-anchor="middle" fill="white" font-size="10" font-family="DM Sans" opacity="0.8">100%</text>
+        <text x="210" y="444" text-anchor="middle" fill="white" font-size="9" font-family="DM Sans" opacity="0.7">natural</text>
+      </svg>
+    </div>
+    <div class="floating-tag tag1">🌱 100% Natural</div>
+    <div class="floating-tag tag2">♻️ Biodegradable</div>
+    <div class="floating-tag tag3">💧 Sin BPA</div>
+    <div class="floating-tag tag4">🌍 Huella cero</div>
+    <div class="floating-tag tag5">🐰 Cruelty Free</div>
+  </div>
+</section>
+
+<!-- ─── STATS ─── -->
+<div class="stats">
+  <div>
+    <div class="stat-num" data-target="2500">2.5K+</div>
+    <div class="stat-label">Clientes felices</div>
+  </div>
+  <div>
+    <div class="stat-num">48</div>
+    <div class="stat-label">Productos eco</div>
+  </div>
+  <div>
+    <div class="stat-num">98%</div>
+    <div class="stat-label">Satisfacción</div>
+  </div>
+  <div>
+    <div class="stat-num">3🌎</div>
+    <div class="stat-label">Países de envío</div>
+  </div>
+</div>
+
+<!-- ─── PRODUCTOS ─── -->
+<section id="productos">
+  <div class="products-header reveal">
+    <span class="section-label">Nuestra colección</span>
+    <h2 class="section-title">Productos que <em>cuidan</em> el planeta</h2>
+  </div>
+  <div class="products-grid">
+    <!-- Product cards -->
+    <div class="product-card reveal reveal-delay-1">
+      <div class="product-img">
+        <span class="product-badge">Natural</span>
+        <img src="https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=400&q=80" alt="Cepillo de bambú" loading="lazy">
+      </div>
+      <div class="product-body">
+        <div class="product-name">Cepillo de Bambú</div>
+        <div class="product-desc">Cerdas de carbón activado, mango 100% bambú. Compostable al 95%.</div>
+        <div class="product-footer">
+          <span class="product-price">$18.000</span>
+          <button class="btn-add" onclick="addCart(this)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-2">
+      <div class="product-img">
+        <span class="product-badge" style="background:#3a7ec4">Eco</span>
+        <img src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&q=80" alt="Botella reutilizable" loading="lazy">
+      </div>
+      <div class="product-body">
+        <div class="product-name">Botella Reutilizable</div>
+        <div class="product-desc">Acero inoxidable 500ml. Mantiene frío 24h y caliente 12h. Sin BPA.</div>
+        <div class="product-footer">
+          <span class="product-price">$45.000</span>
+          <button class="btn-add" onclick="addCart(this)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-3">
+      <div class="product-img">
+        <span class="product-badge" style="background:var(--tierra)">Orgánico</span>
+        <img src="https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=400&q=80&fit=crop" alt="Shampoo sólido" loading="lazy">
+      </div>
+      <div class="product-body">
+        <div class="product-name">Shampoo Sólido</div>
+        <div class="product-desc">Ingredientes orgánicos certificados. Equivale a 3 botellas líquidas.</div>
+        <div class="product-footer">
+          <span class="product-price">$28.000</span>
+          <button class="btn-add" onclick="addCart(this)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-1">
+      <div class="product-img">
+        <span class="product-badge">100% biodegradable</span>
+        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&q=80&fit=crop" alt="Bolsa ecológica" loading="lazy">
+      </div>
+      <div class="product-body">
+        <div class="product-name">Bolsa Ecológica</div>
+        <div class="product-desc">Yute natural, lavable, resistente hasta 15kg. Diseño atemporal.</div>
+        <div class="product-footer">
+          <span class="product-price">$15.000</span>
+          <button class="btn-add" onclick="addCart(this)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-2">
+      <div class="product-img">
+        <span class="product-badge" style="background:#b8860b">Artesanal</span>
+        <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&q=80&fit=crop" alt="Lámpara eco" loading="lazy">
+      </div>
+      <div class="product-body">
+        <div class="product-name">Lámpara Eco Minimalista</div>
+        <div class="product-desc">Fabricada con acero reciclado. Bajo consumo LED, diseño atemporal. 80% menos energía.</div>
+        <div class="product-footer">
+          <span class="product-price">$35.000</span>
+          <button class="btn-add" onclick="addCart(this)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-3">
+      <div class="product-img">
+        <span class="product-badge">Eco</span>
+        <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=400&q=80&fit=crop" alt="Cubiertos reutilizables" loading="lazy">
+      </div>
+      <div class="product-body">
+        <div class="product-name">Cubiertos Reutilizables</div>
+        <div class="product-desc">Set de bambú x4 piezas. Estuche de tela orgánica incluido.</div>
+        <div class="product-footer">
+          <span class="product-price">$22.000</span>
+          <button class="btn-add" onclick="addCart(this)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── NOSOTROS ─── -->
+<section id="nosotros">
+  <div class="nosotros-visual reveal">
+    <div class="nosotros-frame">
+      <svg viewBox="0 0 320 380" width="80%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ng1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.15)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0.02)"/>
+          </linearGradient>
+        </defs>
+        <!-- Earth circle -->
+        <circle cx="160" cy="190" r="120" fill="rgba(255,255,255,0.08)"/>
+        <circle cx="160" cy="190" r="90" fill="rgba(255,255,255,0.06)"/>
+        <!-- Hands holding earth -->
+        <ellipse cx="160" cy="290" rx="80" ry="30" fill="rgba(255,255,255,0.15)"/>
+        <!-- Leaf cluster -->
+        <path d="M130 180 Q110 145 95 130 Q125 140 138 165 Q135 173 130 180Z" fill="rgba(255,255,255,0.6)"/>
+        <path d="M158 155 Q155 120 158 100 Q165 120 165 140 Q163 148 158 155Z" fill="rgba(255,255,255,0.55)"/>
+        <path d="M190 175 Q215 145 230 132 Q215 148 202 168 Q196 174 190 175Z" fill="rgba(255,255,255,0.6)"/>
+        <path d="M145 205 Q118 190 105 175 Q130 183 145 200 Q145 202 145 205Z" fill="rgba(255,255,255,0.45)"/>
+        <path d="M178 200 Q205 188 220 172 Q208 182 194 196 Q186 200 178 200Z" fill="rgba(255,255,255,0.45)"/>
+        <!-- Stem -->
+        <line x1="160" y1="155" x2="160" y2="240" stroke="rgba(255,255,255,0.4)" stroke-width="4" stroke-linecap="round"/>
+        <!-- Ground arc -->
+        <path d="M100 270 Q160 255 220 270" stroke="rgba(255,255,255,0.3)" stroke-width="3" fill="none"/>
+        <!-- Stars -->
+        <circle cx="80" cy="100" r="3" fill="rgba(255,255,255,0.5)"/>
+        <circle cx="250" cy="120" r="2" fill="rgba(255,255,255,0.4)"/>
+        <circle cx="70" cy="240" r="2" fill="rgba(255,255,255,0.35)"/>
+        <circle cx="265" cy="200" r="3" fill="rgba(255,255,255,0.45)"/>
+      </svg>
+    </div>
+    <div class="nosotros-deco">
+      <div class="nosotros-deco-num">🌿 2019</div>
+      <div class="nosotros-deco-text">Fundada con propósito</div>
+    </div>
+  </div>
+  <div class="nosotros-text reveal reveal-delay-2">
+    <span class="section-label">Nuestra historia</span>
+    <h2 class="section-title">Nació de un <em>sueño</em> verde</h2>
+    <p>
+      VerdeRaíz nació en 2019 con una convicción simple: el consumo cotidiano puede ser el mayor acto de amor por el planeta. Empezamos desde casa, eligiendo alternativas que redujeran el plástico sin sacrificar calidad ni estilo.
+    </p>
+    <p>
+      Creemos que consumir conscientemente puede transformar el futuro del planeta. Cada producto que ofrecemos está seleccionado con rigor: origen trazable, materiales honestos y empaques que respetan la tierra.
+    </p>
+    <div class="nosotros-values">
+      <div class="nosotros-value">Producción responsable y trazable</div>
+      <div class="nosotros-value">Reducción activa del plástico de un solo uso</div>
+      <div class="nosotros-value">Comunidad de consumidores conscientes</div>
+      <div class="nosotros-value">Empaques 100% biodegradables</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DIFERENCIADORES ─── -->
+<section id="diferenciadores">
+  <div class="dif-header reveal">
+    <span class="section-label">¿Por qué elegirnos?</span>
+    <h2 class="section-title">Comprometidos con <em>el planeta</em></h2>
+  </div>
+  <div class="dif-grid">
+    <div class="dif-card reveal reveal-delay-1">
+      <span class="dif-icon">🌱</span>
+      <div class="dif-title">Productos sostenibles</div>
+      <div class="dif-desc">Cada artículo es verificado para garantizar su impacto ambiental positivo y durabilidad real.</div>
+    </div>
+    <div class="dif-card reveal reveal-delay-2">
+      <span class="dif-icon">📦</span>
+      <div class="dif-title">Empaques biodegradables</div>
+      <div class="dif-desc">Sin plásticos. Enviamos en cajas de cartón reciclado y papel kraft 100% natural.</div>
+    </div>
+    <div class="dif-card reveal reveal-delay-3">
+      <span class="dif-icon">🐰</span>
+      <div class="dif-title">Cruelty Free</div>
+      <div class="dif-desc">Ninguno de nuestros productos es testeado en animales. Siempre. Sin excepciones.</div>
+    </div>
+    <div class="dif-card reveal reveal-delay-4">
+      <span class="dif-icon">♻️</span>
+      <div class="dif-title">Materiales reciclados</div>
+      <div class="dif-desc">Priorizamos proveedores que usan materiales recuperados y procesos de economía circular.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GALERÍA ─── -->
+<section id="galeria">
+  <div class="galeria-header reveal">
+    <span class="section-label">Estilo de vida</span>
+    <h2 class="section-title">Vivir <em>verde</em> se ve así</h2>
+  </div>
+  <div class="galeria-grid">
+    <!-- Card 1: Naturaleza pura — lush forest -->
+    <div class="galeria-item g1 reveal">
+      <img
+        src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80&fit=crop"
+        alt="Bosque exuberante — naturaleza pura"
+        loading="lazy"
+      >
+      <div class="galeria-label">Naturaleza pura</div>
+    </div>
+    <!-- Card 2: Productos naturales — eco bamboo products -->
+    <div class="galeria-item g2 reveal reveal-delay-1">
+      <img
+        src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80&fit=crop"
+        alt="Productos naturales y ecológicos"
+        loading="lazy"
+      >
+      <div class="galeria-label">Productos naturales</div>
+    </div>
+    <!-- Card 3: Vida consciente — mindful living -->
+    <div class="galeria-item g3 reveal reveal-delay-2">
+      <img
+        src="https://images.unsplash.com/photo-1499728603263-13726abce5fd?w=600&q=80&fit=crop"
+        alt="Vida consciente y sostenible"
+        loading="lazy"
+      >
+      <div class="galeria-label">Vida consciente</div>
+    </div>
+    <!-- Card 4: Energía limpia — solar panels -->
+    <div class="galeria-item g4 reveal reveal-delay-1">
+      <img
+        src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&q=80&fit=crop"
+        alt="Paneles solares — energía limpia"
+        loading="lazy"
+      >
+      <div class="galeria-label" style="color:var(--tierra)">Energía limpia</div>
+    </div>
+    <!-- Card 5: Impacto real — hands planting a tree -->
+    <div class="galeria-item g5 reveal reveal-delay-2">
+      <img
+        src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80&fit=crop"
+        alt="Plantando árboles — impacto real"
+        loading="lazy"
+      >
+      <div class="galeria-label">Impacto real</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIOS ─── -->
+<section id="testimonios">
+  <div class="test-header reveal">
+    <span class="section-label">Comunidad</span>
+    <h2 class="section-title">Lo que dice <em>nuestra familia</em> verde</h2>
+  </div>
+  <div class="test-bubbles">
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"Ahora reduzco muchísimo el plástico en mi casa. El cepillo de bambú fue el primer paso y ya no puedo imaginar mi baño sin estos productos."</p>
+      <div class="test-author">
+        <div class="test-avatar" style="background:#e8f5ec">🙋‍♀️</div>
+        <div>
+          <div class="test-name">Laura M.</div>
+          <div class="test-loc">Medellín, Colombia</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"La botella reutilizable es increíble. Fría todo el día y sin ese sabor metálico. Mi familia entera ya tiene una. Enviaron súper rápido."</p>
+      <div class="test-author">
+        <div class="test-avatar" style="background:#fef5e8">👨</div>
+        <div>
+          <div class="test-name">Carlos R.</div>
+          <div class="test-loc">Bogotá, Colombia</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"El shampoo sólido transformó mi rutina. Mi cabello está más sano y ya no genero esa cantidad de plástico. Es increíble que dure tantísimo."</p>
+      <div class="test-author">
+        <div class="test-avatar" style="background:#f0efe8">🙋</div>
+        <div>
+          <div class="test-name">Valeria G.</div>
+          <div class="test-loc">Cali, Colombia</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★☆</div>
+      <p class="test-text">"Me encanta saber que cada compra planta un árbol. Los cubiertos de bambú son perfectos para el trabajo y el empaque llegó hermoso, cero plástico."</p>
+      <div class="test-author">
+        <div class="test-avatar" style="background:#e8f2e8">👩</div>
+        <div>
+          <div class="test-name">Ana S.</div>
+          <div class="test-loc">Bucaramanga, Colombia</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"Las velas naturales son maravillosas. El aroma es suave, nada artificial. Las pongo en casa y transforman todo el ambiente. Volvería a comprar."</p>
+      <div class="test-author">
+        <div class="test-avatar" style="background:#fef5e8">🧑</div>
+        <div>
+          <div class="test-name">Diego T.</div>
+          <div class="test-loc">Barranquilla, Colombia</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"Hice un pedido para toda la oficina. Fue un éxito total. Ahora somos un equipo más consciente. VerdeRaíz tiene algo especial, la gente lo siente."</p>
+      <div class="test-author">
+        <div class="test-avatar" style="background:#e8f0fa">👩‍💼</div>
+        <div>
+          <div class="test-name">Sofía P.</div>
+          <div class="test-loc">Manizales, Colombia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── NEWSLETTER ─── -->
+<section id="newsletter">
+  <div class="nl-content">
+    <div class="nl-icon">🌿</div>
+    <h2 class="nl-title">Únete a la comunidad verde</h2>
+    <p class="nl-sub">Recibe consejos ecológicos, novedades exclusivas y descuentos especiales directo en tu correo.</p>
+    <div class="nl-form">
+      <input class="nl-input" type="email" placeholder="tu@correo.com" id="nlEmail">
+      <button class="nl-btn" onclick="subscribeNL()">Suscribirse 🌱</button>
+    </div>
+    <p id="nlMsg" style="margin-top:1rem;font-size:.85rem;color:rgba(255,255,255,.7);display:none">¡Gracias! Ya eres parte de la familia VerdeRaíz 🌿</p>
+  </div>
+</section>
+
+<!-- ─── CONTACTO ─── -->
+<section id="contacto">
+  <div class="contact-info reveal">
+    <span class="section-label">Hablemos</span>
+    <h2 class="section-title">¿Tienes <em>preguntas</em>?</h2>
+    <p>Estamos aquí para ayudarte a dar el primer paso hacia un estilo de vida más sostenible. Escríbenos sin dudarlo.</p>
+    <div class="contact-items">
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <span>hola@verderaiz.co</span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📱</div>
+        <span>+57 300 123 4567</span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <span>Medellín, Colombia</span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <span>Lun–Vie 8am – 6pm</span>
+      </div>
+    </div>
+  </div>
+  <div class="contact-form reveal reveal-delay-2">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nombre</label>
+        <input type="text" placeholder="Tu nombre">
+      </div>
+      <div class="form-group">
+        <label>Correo</label>
+        <input type="email" placeholder="tu@correo.com">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Asunto</label>
+      <select>
+        <option>Consulta sobre producto</option>
+        <option>Estado de pedido</option>
+        <option>Alianza comercial</option>
+        <option>Otro</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Mensaje</label>
+      <textarea placeholder="Cuéntanos, ¿en qué podemos ayudarte?"></textarea>
+    </div>
+    <button class="submit-btn" onclick="sendMsg(this)">
+      <span>Enviar mensaje</span> <span>🌿</span>
+    </button>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">Verde<span style="color:var(--tierra)">Raíz</span></a>
+      <p>Pequeños cambios, un planeta mejor. Comprometidos con el bienestar de la tierra y de quienes la habitamos.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Tienda</h4>
+      <ul>
+        <li><a href="#">Todos los productos</a></li>
+        <li><a href="#">Nuevos</a></li>
+        <li><a href="#">Ofertas</a></li>
+        <li><a href="#">Packs eco</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href="#">Nosotros</a></li>
+        <li><a href="#">Blog verde</a></li>
+        <li><a href="#">Impacto</a></li>
+        <li><a href="#">Trabaja con nosotros</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Ayuda</h4>
+      <ul>
+        <li><a href="#">Envíos y devoluciones</a></li>
+        <li><a href="#">Preguntas frecuentes</a></li>
+        <li><a href="#">Contacto</a></li>
+        <li><a href="#">Política de privacidad</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 VerdeRaíz. Hecho con 💚 por el planeta.</span>
+    <div class="socials">
+      <!-- Instagram -->
+      <a href="#" class="social-btn" aria-label="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="2"/>
+          <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+          <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+        </svg>
+      </a>
+      <!-- X / Twitter -->
+      <a href="#" class="social-btn" aria-label="X (Twitter)">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </a>
+      <!-- Facebook -->
+      <a href="#" class="social-btn" aria-label="Facebook">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.095 10.125 24v-8.437H7.078v-3.49h3.047v-2.66c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.874v2.277h3.328l-.532 3.49h-2.796V24C19.612 23.095 24 18.1 24 12.073z"/>
+        </svg>
+      </a>
+      <!-- YouTube -->
+      <a href="#" class="social-btn" aria-label="YouTube">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── HOJAS CAYENDO ───
+const LEAVES = ['🍃','🌿','🍀','🌱'];
+let lastLeaf = 0;
+const THROTTLE = 80; // ms entre hojas
+
+document.addEventListener('mousemove', e => {
+  const now = Date.now();
+  if (now - lastLeaf < THROTTLE) return;
+  lastLeaf = now;
+
+  const leaf = document.createElement('span');
+  leaf.className = 'leaf-particle';
+  leaf.textContent = LEAVES[Math.floor(Math.random() * LEAVES.length)];
+
+  // Posición: exactamente donde está el cursor
+  leaf.style.left = e.clientX + 'px';
+  leaf.style.top  = e.clientY + 'px';
+
+  // Variables CSS aleatorias para variedad
+  const dur = (0.7 + Math.random() * 0.6).toFixed(2) + 's';
+  const dx  = (Math.random() * 40 - 20).toFixed(0) + 'px';
+  const rot = (Math.random() * 120 - 60).toFixed(0) + 'deg';
+  leaf.style.setProperty('--dur', dur);
+  leaf.style.setProperty('--dx',  dx);
+  leaf.style.setProperty('--rot', rot);
+
+  document.body.appendChild(leaf);
+  leaf.addEventListener('animationend', () => leaf.remove());
+});
+
+// ─── NAV SCROLL ───
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ─── HAMBURGER ───
+const ham = document.getElementById('hamburger');
+ham.addEventListener('click', () => {
+  nav.classList.toggle('nav-mobile-open');
+});
+// Close on nav link click
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => nav.classList.remove('nav-mobile-open'));
+});
+
+// ─── SCROLL REVEAL ───
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.12 });
+reveals.forEach(el => observer.observe(el));
+
+// ─── ADD TO CART ───
+let cartCount = 0;
+function addCart(btn) {
+  cartCount++;
+  btn.textContent = '✓';
+  btn.style.background = 'var(--verde-suave)';
+  setTimeout(() => { btn.textContent = '+'; btn.style.background = 'var(--verde)'; }, 1200);
+  // Show cart toast
+  showToast(`¡Producto añadido! 🛒 (${cartCount})`);
+}
+
+function showToast(msg) {
+  let t = document.getElementById('toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toast';
+    t.style.cssText = 'position:fixed;bottom:2rem;right:2rem;background:var(--verde);color:#fff;padding:.8rem 1.4rem;border-radius:2rem;font-size:.88rem;z-index:9999;transform:translateY(80px);transition:transform .3s;font-family:DM Sans,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.15)';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.transform = 'translateY(0)';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.style.transform = 'translateY(80px)'; }, 2500);
+}
+
+// ─── NEWSLETTER ───
+function subscribeNL() {
+  const email = document.getElementById('nlEmail').value;
+  if (!email.includes('@')) { return showToast('Ingresa un correo válido 📧'); }
+  document.getElementById('nlMsg').style.display = 'block';
+  document.getElementById('nlEmail').value = '';
+}
+
+// ─── CONTACT FORM ───
+function sendMsg(btn) {
+  btn.querySelector('span').textContent = '¡Enviado!';
+  btn.style.background = 'var(--verde-suave)';
+  showToast('Mensaje enviado. ¡Pronto te contactamos! 🌿');
+  setTimeout(() => {
+    btn.querySelector('span').textContent = 'Enviar mensaje';
+    btn.style.background = 'var(--verde)';
+  }, 2500);
+}
+
+// ─── SMOOTH SCROLL ───
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
